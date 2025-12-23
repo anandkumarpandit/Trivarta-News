@@ -1,0 +1,79 @@
+.sidebar-card {
+    display: block;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, border-color 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.sidebar-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+}
+
+/* News Card Specifics */
+.news-card .card-image {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+}
+
+.news-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-card .card-content {
+    padding: 12px;
+}
+
+.card-category {
+    font-size: 0.7rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.card-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+}
+
+/* Ad Card Specifics */
+.ad-card {
+    padding: 15px;
+    text-align: center;
+    background: #f0f0f0;
+}
+
+.ad-label {
+    font-size: 0.6rem;
+    color: #999;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.ad-placeholder {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    color: #888;
+    font-size: 0.8rem;
+    font-weight: 600;
+}

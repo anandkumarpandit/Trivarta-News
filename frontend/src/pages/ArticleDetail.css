@@ -1,0 +1,254 @@
+.article-layout {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: flex-start;
+    padding: 0 1rem;
+    max-width: 1600px;
+}
+
+.article-main {
+    flex: 1;
+    min-width: 0;
+    max-width: 800px;
+}
+
+.promo-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 100px;
+    padding-top: var(--spacing-xl);
+}
+
+.article-detail {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 1200px) {
+    .article-layout {
+        flex-direction: column;
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .promo-sidebar {
+        width: 100%;
+        max-width: 800px;
+        position: static;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .left-sidebar {
+        order: 2;
+        /* Move left sidebar below article */
+    }
+
+    .right-sidebar {
+        order: 3;
+        /* Move right sidebar to the very bottom */
+    }
+
+    .article-main {
+        order: 1;
+        /* Keep article at the top */
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.article-header {
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.article-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.article-meta {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.separator {
+    margin: 0 10px;
+}
+
+.article-media {
+    margin-bottom: var(--spacing-lg);
+}
+
+.featured-image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.article-content {
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+.article-content p {
+    margin-bottom: 20px;
+}
+
+.content-video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.content-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.article-image {
+    margin-bottom: var(--spacing-lg);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.article-image img,
+.article-image iframe,
+.article-image video {
+    width: 100%;
+    /* Full width */
+    height: auto;
+    /* Maintain aspect ratio */
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    /* Optional rounded corners */
+}
+
+.article-content {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    font-family: 'Merriweather', serif;
+    /* Classic reading font */
+    overflow-wrap: break-word;
+    /* Fix for 'draggable' overflow issue */
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Styles for inline media within Rich Text Content */
+.article-content img {
+    max-width: 300px;
+    /* Small size as requested */
+    height: auto;
+    border-radius: 4px;
+    margin: 1rem 0;
+    display: block;
+}
+
+.article-content iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    height: auto;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+/* Ensure 'small size' if the user adds them via Quill */
+/* Styles for videos embedded inside content */
+.content-video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    /* 16:9 Aspect Ratio */
+    height: 0;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.content-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.content-video-container.reels-container {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 125%;
+    /* Vertical aspect ratio for Reels */
+}
+
+@media (max-width: 768px) {
+    .article-detail {
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-lg);
+    }
+
+    .article-header h1 {
+        font-size: 1.8rem;
+        text-align: left;
+    }
+
+    .subtitle {
+        font-size: 1.05rem;
+        text-align: left;
+    }
+
+    .article-content {
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .article-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .separator {
+        display: none;
+    }
+}
