@@ -61,6 +61,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
+const fs = require('fs'); // ✅ ADDED: to check folder existence
 
 dotenv.config();
 
@@ -89,19 +90,28 @@ app.use('/api/categories', require('./routes/categories'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/promotions', require('./routes/promos'));
 
-// Serve static files in production (FIXED)
+// ===================== FIX START =====================
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-    // ✅ SPA fallback — NO '*'
-    app.use((req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-    });
+    const frontendPath = path.join(__dirname, '../frontend/dist'); // ✅ FIXED path handling
+
+    if (fs.existsSync(frontendPath)) { // ✅ ADDED safety check
+        app.use(express.static(frontendPath));
+
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(frontendPath, 'index.html'));
+        });
+    } else {
+        // ✅ If frontend not built, avoid crash
+        console.log('Frontend build not found, running API only');
+    }
+
 } else {
     app.get('/', (req, res) => {
         res.send('News Portal API is running');
     });
 }
+// ===================== FIX END =====================
 
 // Error handling middleware
 app.use((err, req, res, next) => {
