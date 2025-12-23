@@ -3,18 +3,9 @@ const router = express.Router();
 const articleController = require('../controllers/articleController');
 const authMiddleware = require('../middleware/authMiddleware');
 const multer = require('multer');
-const path = require('path');
+const { storage } = require('../config/cloudinary'); // Import Cloudinary storage
 
-// Multer Setup for Image Upload
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-const upload = multer({ storage });
+const upload = multer({ storage }); // Use Cloudinary storage
 
 // Public Routes
 router.get('/', articleController.getArticles);
@@ -27,11 +18,11 @@ router.post('/', authMiddleware, upload.single('image'), async (req, res) => {
     console.log('--- CREATE ARTICLE ---');
     console.log('Body:', req.body);
     console.log('File:', req.file);
-    if (req.file) req.body.image = `/uploads/${req.file.filename}`;
+    if (req.file) req.body.image = req.file.path; // Use Cloudinary URL
     articleController.createArticle(req, res);
 });
 router.put('/:id', authMiddleware, upload.single('image'), async (req, res) => {
-    if (req.file) req.body.image = `/uploads/${req.file.filename}`;
+    if (req.file) req.body.image = req.file.path; // Use Cloudinary URL
     articleController.updateArticle(req, res);
 });
 router.delete('/:id', authMiddleware, articleController.deleteArticle);
