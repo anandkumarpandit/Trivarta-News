@@ -38,6 +38,11 @@ export const getImageUrl = (imagePath) => {
 export const getVideoEmbed = (url) => {
     if (!url) return null;
 
+    // Check for direct video files first
+    if (url.match(/\.(mp4|webm|mov)$/i) || url.includes('/video/upload/')) {
+        return url;
+    }
+
     // If it's already an embed URL, just return it (maybe strip showinfo etc if needed)
     if (url.includes('youtube.com/embed/')) {
         return url;

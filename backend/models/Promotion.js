@@ -8,7 +8,7 @@ const adSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String, // Path to the ad image
-        required: true
+        required: false
     },
     linkUrl: {
         type: String, // URL the ad should link to

@@ -22,22 +22,28 @@ exports.createPromo = async (req, res) => {
 
         const { title, linkUrl, position, videoUrl } = req.body;
         let imageUrl = req.body.imageUrl;
+        let finalVideoUrl = videoUrl;
 
         // If file uploaded, use it
         if (req.file) {
-            imageUrl = req.file.path; // Cloudinary URL
+            // Check if uploaded file is a video
+            const isVideo = req.file.mimetype && req.file.mimetype.startsWith('video');
+
+            if (isVideo) {
+                finalVideoUrl = req.file.path; // Cloudinary Video URL
+            } else {
+                imageUrl = req.file.path; // Cloudinary Image URL
+            }
         }
 
-        if (!imageUrl) {
-            return res.status(400).json({ message: 'Image URL or Uploaded Image is required' });
-        }
+        // Removed mandatory imageUrl check as requested
 
         const newPromo = new Promotion({
             title,
             imageUrl,
             linkUrl,
             position,
-            videoUrl
+            videoUrl: finalVideoUrl
         });
 
         const savedPromo = await newPromo.save();

@@ -66,7 +66,9 @@ const PromoForm = () => {
             }
             navigate('/admin/promotions');
         } catch (err) {
-            alert('Failed to save promotion');
+            console.error('Promo Submit Error:', err);
+            const errorMsg = err.response?.data?.message || err.message || 'Failed to save promotion';
+            alert(`Error: ${errorMsg}`);
         }
     };
 
@@ -86,27 +88,53 @@ const PromoForm = () => {
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', padding: '15px', background: '#f9f9f9', borderRadius: '8px', border: '1px solid #eee' }}>
-                    <label style={{ fontWeight: 'bold' }}>Promotion Image</label>
+                    <label style={{ fontWeight: 'bold' }}>Promotion Media (Image or Video)</label>
                     <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
                         <button type="button" onClick={() => setUseUrl(true)} className={`btn-sm ${useUrl ? 'btn' : 'btn-outline'}`}>Use URL</button>
-                        <button type="button" onClick={() => setUseUrl(false)} className={`btn-sm ${!useUrl ? 'btn' : 'btn-outline'}`}>Upload Photo</button>
+                        <button type="button" onClick={() => setUseUrl(false)} className={`btn-sm ${!useUrl ? 'btn' : 'btn-outline'}`}>Upload File</button>
                     </div>
 
                     {useUrl ? (
-                        <input
-                            type="text"
-                            value={formData.imageUrl}
-                            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                            placeholder="https://example.com/promo-image.jpg"
-                            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-                        />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <input
+                                type="text"
+                                value={formData.imageUrl}
+                                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                                placeholder="https://example.com/image.jpg"
+                                style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                            />
+                            {formData.imageUrl && (
+                                <div style={{ marginTop: '10px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #ddd' }}>
+                                    <img src={formData.imageUrl} alt="Preview" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} onError={(e) => e.target.style.display = 'none'} />
+                                </div>
+                            )}
+                        </div>
                     ) : (
-                        <input
-                            type="file"
-                            onChange={(e) => setImageFile(e.target.files[0])}
-                            accept="image/*"
-                            style={{ padding: '10px' }}
-                        />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <input
+                                type="file"
+                                onChange={(e) => setImageFile(e.target.files[0])}
+                                accept="image/*,video/mp4,video/x-m4v,video/*"
+                                style={{ padding: '10px' }}
+                            />
+                            {imageFile && (
+                                <div style={{ marginTop: '10px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #ddd' }}>
+                                    {imageFile.type.startsWith('video') ? (
+                                        <video
+                                            src={URL.createObjectURL(imageFile)}
+                                            controls
+                                            style={{ width: '100%', maxHeight: '300px' }}
+                                        />
+                                    ) : (
+                                        <img
+                                            src={URL.createObjectURL(imageFile)}
+                                            alt="Preview"
+                                            style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }}
+                                        />
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     )}
                 </div>
 

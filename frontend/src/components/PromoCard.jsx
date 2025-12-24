@@ -63,6 +63,8 @@ const PromoCard = ({ promo }) => {
                 </div>
                 <div style={{ textAlign: 'left' }}>
                     <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.2' }}>QuickAds Symphony</div>
+                    {/* Title moved here */}
+                    <div style={{ fontSize: '0.8rem', fontWeight: '600', color: '#4f46e5', marginTop: '2px' }}>{promo.title}</div>
                     <div style={{ fontSize: '0.7rem', color: '#888' }}>Sponsored Assistant</div>
                 </div>
 
@@ -87,28 +89,51 @@ const PromoCard = ({ promo }) => {
 
             <div style={{ position: 'relative' }}>
                 {videoEmbedUrl ? (
-                    <div style={{
-                        position: 'relative',
-                        paddingBottom: videoEmbedUrl.includes('instagram.com/reel/') ? '177.77%' : '150%',
-                        height: 0,
-                        overflow: 'hidden',
-                        backgroundColor: '#000'
-                    }}>
-                        <iframe
-                            src={videoEmbedUrl}
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                                border: 'none'
-                            }}
-                            allowFullScreen
-                            title={promo.title}
-                        ></iframe>
-                    </div>
-                ) : (
+                    videoEmbedUrl.match(/\.(mp4|webm|mov)$/i) || videoEmbedUrl.includes('/video/upload/') ? (
+                        <div style={{
+                            width: '100%',
+                            background: '#000',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}>
+                            <video
+                                src={videoEmbedUrl}
+                                controls
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                style={{
+                                    maxWidth: '100%',
+                                    maxHeight: '300px',
+                                    display: 'block'
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        <div style={{
+                            position: 'relative',
+                            paddingBottom: videoEmbedUrl.includes('instagram.com/reel/') ? '177.77%' : '150%',
+                            height: 0,
+                            overflow: 'hidden',
+                            backgroundColor: '#000'
+                        }}>
+                            <iframe
+                                src={videoEmbedUrl}
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    border: 'none'
+                                }}
+                                allowFullScreen
+                                title={promo.title}
+                            ></iframe>
+                        </div>
+                    )
+                ) : promo.imageUrl ? (
                     <a href={promo.linkUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block', textDecoration: 'none' }}>
                         <div style={{ overflow: 'hidden' }}>
                             <img
@@ -124,7 +149,7 @@ const PromoCard = ({ promo }) => {
                             />
                         </div>
                     </a>
-                )}
+                ) : null}
 
                 {/* Footer Controls */}
                 <div style={{
@@ -136,7 +161,7 @@ const PromoCard = ({ promo }) => {
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ textAlign: 'left' }}>
-                            <div style={{ fontSize: '0.9rem', fontWeight: '700', color: '#333' }}>{promo.title}</div>
+                            {/* Title removed from here */}
                             <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '2px' }}>Personalized for you</div>
                         </div>
                         <IoInformationCircleOutline size={20} color="#ccc" />
