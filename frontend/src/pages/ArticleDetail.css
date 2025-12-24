@@ -79,88 +79,65 @@
 }
 
 .article-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: var(--fs-4xl);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    font-weight: 800;
 }
 
 .subtitle {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--text-secondary);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    line-height: 1.5;
 }
 
 .article-meta {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .separator {
     margin: 0 10px;
+    opacity: 0.5;
 }
 
 .article-media {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
 }
 
 .featured-image {
     width: 100%;
-    border-radius: 8px;
-}
-
-.article-content {
-    font-size: 1.15rem;
-    line-height: 1.8;
-}
-
-.article-content p {
-    margin-bottom: 20px;
-}
-
-.content-video-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.content-video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.article-image {
-    margin-bottom: var(--spacing-lg);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.article-image img,
-.article-image iframe,
-.article-image video {
-    width: 100%;
-    /* Full width */
-    height: auto;
-    /* Maintain aspect ratio */
+    border-radius: 12px;
     display: block;
-    margin: 0 auto;
-    border-radius: 8px;
-    /* Optional rounded corners */
 }
 
 .article-content {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     line-height: 1.8;
     color: var(--text-primary);
-    font-family: 'Merriweather', serif;
-    /* Classic reading font */
+    font-family: var(--font-family);
+    /* Clean sans-serif as requested */
     overflow-wrap: break-word;
     /* Fix for 'draggable' overflow issue */
     word-wrap: break-word;
     word-break: break-word;
+}
+
+/* Override any inline styles from rich text editors that might conflict with dark mode */
+.article-content * {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+/* Re-apply link styling if needed, as 'inherit' might strip them, though 'a' tags usually have specific styles */
+.article-content a {
+    color: var(--accent-color);
 }
 
 .article-content p {

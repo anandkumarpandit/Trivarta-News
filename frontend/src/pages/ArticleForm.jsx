@@ -61,7 +61,7 @@ const ArticleForm = () => {
         formData.append('isBreaking', isBreaking);
         formData.append('isTrending', isTrending);
         formData.append('isLatest', isLatest);
-        if (videoUrl) formData.append('videoUrl', videoUrl);
+        formData.append('videoUrl', videoUrl); // Always send videoUrl to allow clearing it
         if (image) formData.append('image', image);
 
         try {
