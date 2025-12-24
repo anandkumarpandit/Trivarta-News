@@ -25,7 +25,7 @@ exports.createPromo = async (req, res) => {
 
         // If file uploaded, use it
         if (req.file) {
-            imageUrl = `/uploads/${req.file.filename}`;
+            imageUrl = req.file.path; // Cloudinary URL
         }
 
         if (!imageUrl) {
@@ -61,7 +61,7 @@ exports.updatePromo = async (req, res) => {
 
         const updateData = { ...req.body };
         if (req.file) {
-            updateData.imageUrl = `/uploads/${req.file.filename}`;
+            updateData.imageUrl = req.file.path; // Cloudinary URL
         }
 
         const updatedPromo = await Promotion.findByIdAndUpdate(

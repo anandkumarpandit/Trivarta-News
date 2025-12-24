@@ -20,6 +20,16 @@ api.interceptors.request.use(
 export const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
+
+    // Handle broken Cloudinary paths saved as local uploads
+    if (imagePath.includes('/news-portal/')) {
+        // Extract the public ID part (e.g., news-portal/xyz)
+        const parts = imagePath.split('/news-portal/');
+        if (parts[1]) {
+            return `https://res.cloudinary.com/dbzjoc5rr/image/upload/v1/news-portal/${parts[1]}`;
+        }
+    }
+
     const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
     const serverURL = baseURL.replace('/api', '');
     return `${serverURL}${imagePath}`;

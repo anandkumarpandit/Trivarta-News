@@ -8,14 +8,12 @@ const upload = multer({ storage }); // Use Cloudinary storage
 
 // All routes are under /api/promotions
 router.get('/', getPromos);
-router.post('/', upload.single('image'), (req, res, next) => {
-    if (req.file) req.body.image = req.file.path; // Use Cloudinary URL
-    next();
-}, createPromo);
-router.put('/:id', upload.single('image'), (req, res, next) => {
-    if (req.file) req.body.image = req.file.path; // Use Cloudinary URL
-    next();
-}, updatePromo);
+
+// Controller handles the file logic, just pass the middleware
+router.post('/', upload.single('image'), createPromo);
+
+router.put('/:id', upload.single('image'), updatePromo);
+
 router.delete('/:id', deletePromo);
 
 module.exports = router;

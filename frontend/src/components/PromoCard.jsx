@@ -4,6 +4,7 @@ import { IoCloseCircle, IoInformationCircleOutline } from 'react-icons/io5';
 import { SiAdblock } from 'react-icons/si';
 
 const PromoCard = ({ promo }) => {
+    // console.log('PromoCard Render:', promo.title, promo.imageUrl); // Debug Log
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
