@@ -17,9 +17,11 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    max-width: 1440px;
-    /* Limit width on huge screens */
+    max-width: var(--container-width);
+    /* Match global container width (1280px) */
     margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    /* Add consistent padding */
 }
 
 .navbar-logo {
