@@ -26,12 +26,14 @@ export const getImageUrl = (path) => {
     if (!path) return '';
     if (path.startsWith('http')) return path;
 
-    // 1. Production (relative to current origin)
-    if (import.meta.env.PROD) {
-        return path.startsWith('/') ? path : `/${path}`;
+    // 1. Production (relative to backend origin if VITE_API_URL is set)
+    if (import.meta.env.PROD && import.meta.env.VITE_API_URL) {
+        const baseUrl = import.meta.env.VITE_API_URL.split('/api')[0];
+        const cleanPath = path.startsWith('/') ? path : `/${path}`;
+        return `${baseUrl}${cleanPath}`;
     }
 
-    // 2. Explicit Environment Variable
+    // 2. Explicit Environment Variable for images
     if (import.meta.env.VITE_IMAGE_BASE_URL) {
         const baseUrl = import.meta.env.VITE_IMAGE_BASE_URL.replace(/\/$/, '');
         const cleanPath = path.startsWith('/') ? path : `/${path}`;
@@ -39,7 +41,7 @@ export const getImageUrl = (path) => {
     }
 
     // 3. Fallback for Local Dev (Port 5001 to match .env)
-    return `http://localhost:5001/api${path.startsWith('/') ? path : `/${path}`}`;
+    return `http://localhost:5001${path.startsWith('/') ? path : `/${path}`}`;
 };
 
 export const getVideoEmbed = (url) => {
@@ -55,7 +57,7 @@ export const getVideoEmbed = (url) => {
             const reelId = url.split('/reel/')[1]?.split('/')[0] || url.split('/p/')[1]?.split('/')[0];
             return reelId ? `https://www.instagram.com/reel/${reelId}/embed` : null;
         }
-    } catch (e) {
+    } catch {
         return null;
     }
     return null;

@@ -5,25 +5,28 @@ import api from '../utils/api';
 const ManagePromos = () => {
     const [promos, setPromos] = useState([]);
 
-    useEffect(() => {
-        fetchPromos();
-    }, []);
-
     const fetchPromos = async () => {
         try {
             const res = await api.get('/promotions');
             setPromos(res.data);
-        } catch (err) {
-            console.error("Error fetching promotions:", err);
+        } catch {
+            console.error("Error fetching promotions");
         }
     };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            fetchPromos();
+        }, 0);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this promotion?')) return;
         try {
             await api.delete(`/promotions/${id}`);
             setPromos(promos.filter(item => item._id !== id));
-        } catch (err) {
+        } catch {
             alert('Failed to delete promotion');
         }
     };
@@ -32,7 +35,7 @@ const ManagePromos = () => {
         try {
             const res = await api.put(`/promotions/${promo._id}`, { active: !promo.active });
             setPromos(promos.map(item => item._id === promo._id ? res.data : item));
-        } catch (err) {
+        } catch {
             alert('Failed to update promotion status');
         }
     };

@@ -5,18 +5,21 @@ const ManageCategories = () => {
     const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState('');
 
-    useEffect(() => {
-        fetchCategories();
-    }, []);
-
     const fetchCategories = async () => {
         try {
             const res = await api.get('/categories');
             setCategories(res.data);
-        } catch (err) {
-            console.error("Error fetching categories:", err);
+        } catch {
+            console.error("Error fetching categories");
         }
     };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            fetchCategories();
+        }, 0);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleAdd = async (e) => {
         e.preventDefault();
@@ -24,7 +27,7 @@ const ManageCategories = () => {
             const res = await api.post('/categories', { name: newCategory });
             setCategories([...categories, res.data]);
             setNewCategory('');
-        } catch (err) {
+        } catch {
             alert('Failed to add category');
         }
     };
@@ -34,7 +37,7 @@ const ManageCategories = () => {
         try {
             await api.delete(`/categories/${id}`);
             setCategories(categories.filter(c => c._id !== id));
-        } catch (err) {
+        } catch {
             alert('Failed to delete category');
         }
     };

@@ -1,0 +1,76 @@
+
+> frontend@0.0.0 lint
+> eslint .
+
+
+/Users/anandkumar/Desktop/project/News/frontend/src/pages/AdminArticles.jsx
+  18:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  16 |
+  17 |     useEffect(() => {
+> 18 |         fetchArticles();
+     |         ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |     }, []);
+  20 |
+  21 |     const handleDelete = async (id) => {  react-hooks/set-state-in-effect
+  26:18  error  'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   no-unused-vars
+
+/Users/anandkumar/Desktop/project/News/frontend/src/pages/ManageCategories.jsx
+  18:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  16 |
+  17 |     useEffect(() => {
+> 18 |         fetchCategories();
+     |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |     }, []);
+  20 |
+  21 |     const handleAdd = async (e) => {  react-hooks/set-state-in-effect
+
+/Users/anandkumar/Desktop/project/News/frontend/src/pages/ManagePromos.jsx
+  18:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  16 |
+  17 |     useEffect(() => {
+> 18 |         fetchPromos();
+     |         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |     }, []);
+  20 |
+  21 |     const handleDelete = async (id) => {  react-hooks/set-state-in-effect
+
+/Users/anandkumar/Desktop/project/News/frontend/src/pages/PromoForm.jsx
+  43:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  41 |     useEffect(() => {
+  42 |         if (id) {
+> 43 |             fetchPromo();
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  44 |         }
+  45 |     }, [id, fetchPromo]);
+  46 |  react-hooks/set-state-in-effect
+
+✖ 5 problems (5 errors, 0 warnings)
+

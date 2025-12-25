@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api, { getImageUrl } from '../utils/api';
 
@@ -16,18 +16,11 @@ const PromoForm = () => {
     const [imageFile, setImageFile] = useState(null);
     const [useUrl, setUseUrl] = useState(true);
 
-    useEffect(() => {
-        if (id) {
-            fetchPromo();
-        }
-    }, [id]);
-
-    const fetchPromo = async () => {
+    const fetchPromo = useCallback(async () => {
         try {
             const res = await api.get('/promotions');
             const promo = res.data.find(a => a._id === id);
             if (promo) {
-                // Ensure all fields have at least an empty string to avoid uncontrolled input warnings
                 setFormData({
                     title: promo.title || '',
                     imageUrl: promo.imageUrl || '',
@@ -43,7 +36,16 @@ const PromoForm = () => {
         } catch (err) {
             console.error(err);
         }
-    };
+    }, [id]);
+
+    useEffect(() => {
+        if (id) {
+            const timer = setTimeout(() => {
+                fetchPromo();
+            }, 0);
+            return () => clearTimeout(timer);
+        }
+    }, [id, fetchPromo]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,7 +62,7 @@ const PromoForm = () => {
             } else if (imageFile) {
                 data.append('image', imageFile);
             } else if (id) {
-                data.append('imageUrl', formData.imageUrl); // Fallback for edit mode if no new file
+                data.append('imageUrl', formData.imageUrl);
             }
 
             if (id) {

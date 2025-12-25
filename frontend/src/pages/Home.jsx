@@ -7,7 +7,6 @@ import PromoCard from '../components/PromoCard';
 import './Home.css';
 
 const Home = () => {
-    const [breakingNews, setBreakingNews] = useState(null);
     const [trendingNews, setTrendingNews] = useState([]);
     const [latestNews, setLatestNews] = useState([]);
     const [promos, setPromos] = useState([]);
@@ -17,8 +16,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const breakingRes = await api.get('articles/breaking');
-                setBreakingNews(breakingRes.data[0]);
+                await api.get('articles/breaking'); // Clean fetch but don't set unused state
 
                 const trendingRes = await api.get('articles/trending');
                 setTrendingNews(trendingRes.data);

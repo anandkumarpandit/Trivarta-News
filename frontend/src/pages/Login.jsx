@@ -5,7 +5,6 @@ import { AuthContext } from '../context/AuthContext';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [secretKey, setSecretKey] = useState('');
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 

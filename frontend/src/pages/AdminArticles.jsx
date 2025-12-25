@@ -5,25 +5,28 @@ import api from '../utils/api';
 const AdminArticles = () => {
     const [articles, setArticles] = useState([]);
 
-    useEffect(() => {
-        fetchArticles();
-    }, []);
-
     const fetchArticles = async () => {
         try {
             const res = await api.get('/articles');
             setArticles(res.data);
-        } catch (err) {
-            console.error("Error fetching articles:", err);
+        } catch {
+            console.error("Error fetching articles");
         }
     };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            fetchArticles();
+        }, 0);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this article?')) return;
         try {
             await api.delete(`/articles/${id}`);
             setArticles(articles.filter(a => a._id !== id));
-        } catch (err) {
+        } catch {
             alert('Failed to delete article');
         }
     };
