@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../utils/api';
+import api, { getImageUrl } from '../utils/api';
 
 const PromoForm = () => {
     const { id } = useParams();
@@ -27,7 +27,15 @@ const PromoForm = () => {
             const res = await api.get('/promotions');
             const promo = res.data.find(a => a._id === id);
             if (promo) {
-                setFormData(promo);
+                // Ensure all fields have at least an empty string to avoid uncontrolled input warnings
+                setFormData({
+                    title: promo.title || '',
+                    imageUrl: promo.imageUrl || '',
+                    linkUrl: promo.linkUrl || '',
+                    position: promo.position || 'left',
+                    videoUrl: promo.videoUrl || '',
+                    active: promo.active ?? true
+                });
                 if (promo.imageUrl && promo.imageUrl.startsWith('/uploads')) {
                     setUseUrl(false);
                 }
@@ -98,14 +106,14 @@ const PromoForm = () => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             <input
                                 type="text"
-                                value={formData.imageUrl}
+                                value={formData.imageUrl || ''}
                                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                                 placeholder="https://example.com/image.jpg"
                                 style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
                             />
                             {formData.imageUrl && (
                                 <div style={{ marginTop: '10px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #ddd' }}>
-                                    <img src={formData.imageUrl} alt="Preview" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} onError={(e) => e.target.style.display = 'none'} />
+                                    <img src={getImageUrl(formData.imageUrl)} alt="Preview" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} onError={(e) => e.target.style.display = 'none'} />
                                 </div>
                             )}
                         </div>
@@ -142,7 +150,7 @@ const PromoForm = () => {
                     <label style={{ fontWeight: 'bold' }}>Video / Reels URL (Optional)</label>
                     <input
                         type="text"
-                        value={formData.videoUrl}
+                        value={formData.videoUrl || ''}
                         onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
                         placeholder="https://youtube.com/shorts/... or instagram.com/reel/..."
                         style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}

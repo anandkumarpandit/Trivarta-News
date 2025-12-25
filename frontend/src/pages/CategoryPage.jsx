@@ -18,17 +18,17 @@ const CategoryPage = () => {
                 const isLatestRoute = location.pathname === '/latest';
 
                 if (isLatestRoute) {
-                    const res = await api.get('/articles?latest=true');
+                    const res = await api.get('articles?latest=true');
                     setArticles(res.data);
                 } else if (!category || category.toLowerCase() === 'all') {
-                    const res = await api.get('/articles');
+                    const res = await api.get('articles');
                     setArticles(res.data);
                 } else {
-                    const catsRes = await api.get('/categories');
+                    const catsRes = await api.get('categories');
                     const catObj = catsRes.data.find(c => c.name.toLowerCase() === category.toLowerCase());
 
                     if (catObj) {
-                        const res = await api.get(`/articles?category=${catObj._id}`);
+                        const res = await api.get(`articles?category=${catObj._id}`);
                         setArticles(res.data);
                     } else {
                         setArticles([]);

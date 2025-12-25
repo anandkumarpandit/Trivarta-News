@@ -12,21 +12,21 @@ const Home = () => {
     const [latestNews, setLatestNews] = useState([]);
     const [promos, setPromos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [visibleCount, setVisibleCount] = useState(24); // Show 24 articles initially (1 hero + 23 in grid)
+    const [visibleCount, setVisibleCount] = useState(24); // Show 24 articles initially
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const breakingRes = await api.get('/articles/breaking');
+                const breakingRes = await api.get('articles/breaking');
                 setBreakingNews(breakingRes.data[0]);
 
-                const trendingRes = await api.get('/articles/trending');
+                const trendingRes = await api.get('articles/trending');
                 setTrendingNews(trendingRes.data);
 
-                const latestRes = await api.get('/articles?latest=true');
-                setLatestNews(latestRes.data); // Get all latest news articles
+                const latestRes = await api.get('articles');
+                setLatestNews(latestRes.data);
 
-                const promoRes = await api.get('/promotions');
+                const promoRes = await api.get('promotions');
                 setPromos(promoRes.data);
 
                 setLoading(false);
@@ -40,18 +40,15 @@ const Home = () => {
     }, []);
 
     const loadMore = () => {
-        setVisibleCount(prevCount => prevCount + 12); // Load 12 more articles each time
+        setVisibleCount(prevCount => prevCount + 12);
     };
 
     if (loading) return <div className="container" style={{ padding: '2rem' }}>Loading...</div>;
 
-    // The first article in latestNews will be featured in the Hero Section
     const featuredArticle = latestNews.length > 0 ? latestNews[0] : null;
-    // The rest will be shown in the grid
     const allRemainingArticles = latestNews.slice(1);
     const visibleArticles = allRemainingArticles.slice(0, visibleCount - 1);
     const hasMore = allRemainingArticles.length > visibleArticles.length;
-
 
     return (
         <div className="container home-container">
@@ -70,7 +67,6 @@ const Home = () => {
             {featuredArticle && <HeroSection article={featuredArticle} />}
 
             <div className="main-content-grid">
-                {/* Main Content Column */}
                 <div>
                     <SectionHeader title="Latest News" link="/category/all" linkText="View All News" />
                     <div className="articles-grid">
@@ -92,7 +88,6 @@ const Home = () => {
                     )}
                 </div>
 
-                {/* Sidebar Column */}
                 <div className="sidebar-column">
                     <SectionHeader title="Trending Now" />
                     <div className="trending-list">
@@ -104,8 +99,8 @@ const Home = () => {
                     {promos.length > 0 && (
                         <div className="home-promos" style={{ marginTop: '3rem' }}>
                             <SectionHeader title="Sponsored" />
-                            {promos.filter(p => p.active).slice(0, 2).map(promo => (
-                                <PromoCard key={promo._id} promo={promo} />
+                            {promos.filter(p => p.active).map(promo => (
+                                <PromoCard key={promo._id} promo={promo} compact={true} />
                             ))}
                         </div>
                     )}

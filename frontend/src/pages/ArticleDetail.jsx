@@ -16,10 +16,10 @@ const ArticleDetail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const artRes = await api.get(`/articles/${id}`);
+                const artRes = await api.get(`articles/${id}`);
                 setArticle(artRes.data);
 
-                const promoRes = await api.get('/promotions');
+                const promoRes = await api.get('promotions');
                 const activePromos = promoRes.data.filter(p => p.active);
                 setPromos(promoRes.data);
 
@@ -77,7 +77,7 @@ const ArticleDetail = () => {
 
             <aside className="promo-sidebar left-sidebar">
                 {promos.filter(p => p.position === 'left' && p.active).map(promo => (
-                    <PromoCard key={promo._id} promo={promo} />
+                    <PromoCard key={promo._id} promo={promo} compact={true} />
                 ))}
             </aside>
 
@@ -121,7 +121,7 @@ const ArticleDetail = () => {
 
             <aside className="promo-sidebar right-sidebar">
                 {promos.filter(p => p.position === 'right' && p.active).map(promo => (
-                    <PromoCard key={promo._id} promo={promo} />
+                    <PromoCard key={promo._id} promo={promo} compact={true} />
                 ))}
             </aside>
         </div>

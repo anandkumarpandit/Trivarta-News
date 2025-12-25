@@ -1,24 +1,26 @@
 .article-layout {
     display: flex;
-    justify-content: center;
-    gap: 80px;
+    justify-content: space-between;
     align-items: flex-start;
-    padding: 0 1rem;
+    padding: 0 3%;
+    width: 100%;
     max-width: 1600px;
+    margin: 0 auto;
 }
 
 .article-main {
     flex: 1;
     min-width: 0;
     max-width: 800px;
+    margin: 0 auto;
 }
 
 .promo-sidebar {
-    width: 300px;
+    width: 250px;
     flex-shrink: 0;
     position: sticky;
-    top: 100px;
-    padding-top: var(--spacing-xl);
+    top: 70px;
+    padding-top: var(--spacing-md);
 }
 
 .article-detail {
@@ -163,6 +165,7 @@
 }
 
 /* Ensure 'small size' if the user adds them via Quill */
+
 /* Styles for videos embedded inside content */
 .content-video-container {
     position: relative;
