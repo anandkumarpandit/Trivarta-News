@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import api from '../utils/api';
 import { AuthContext } from '../context/AuthContext';
 
+import './AdminDashboard.css';
+
 const AdminDashboard = () => {
     const { user } = useContext(AuthContext);
     const [stats, setStats] = useState({ articles: 0, categories: 0 });
@@ -28,16 +30,16 @@ const AdminDashboard = () => {
             <h1>Admin Dashboard</h1>
             <p>Welcome back, <strong>{user?.username}</strong></p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--spacing-lg)', marginTop: 'var(--spacing-lg)' }}>
-                <div style={{ padding: '1.5rem', background: '#f5f5f5', borderRadius: '8px', textAlign: 'center' }}>
+            <div className="dashboard-grid">
+                <div className="dashboard-card">
                     <h3>Total Articles</h3>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{stats.articles}</p>
-                    <Link to="/admin/articles" className="btn btn-outline" style={{ marginTop: '1rem' }}>Manage Articles</Link>
+                    <Link to="/admin/articles" className="btn btn-outline">Manage Articles</Link>
                 </div>
-                <div style={{ padding: '1.5rem', background: '#f5f5f5', borderRadius: '8px', textAlign: 'center' }}>
+                <div className="dashboard-card">
                     <h3>Categories</h3>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{stats.categories}</p>
-                    <Link to="/admin/categories" className="btn btn-outline" style={{ marginTop: '1rem' }}>Manage Categories</Link>
+                    <Link to="/admin/categories" className="btn btn-outline">Manage Categories</Link>
                 </div>
             </div>
 
