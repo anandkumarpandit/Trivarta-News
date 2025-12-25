@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
-    baseURL: 'http://localhost:5001/api', // Temporarily force local backend to fix CORS
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
 });
 
 // Add a request interceptor to attach the token
@@ -19,19 +18,22 @@ api.interceptors.request.use(
 
 export const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
+
+    // If it's already a full URL (like Cloudinary's https://res.cloudinary.com/...), use it as is
     if (imagePath.startsWith('http')) return imagePath;
 
-    // Handle broken Cloudinary paths saved as local uploads
-    if (imagePath.includes('/news-portal/')) {
-        // Extract the public ID part (e.g., news-portal/xyz)
-        const parts = imagePath.split('/news-portal/');
-        if (parts[1]) {
-            return `https://res.cloudinary.com/dbzjoc5rr/image/upload/v1/news-portal/${parts[1]}`;
-        }
+    // ONLY attempt to "patch" if it's a relative path that looks like a Cloudinary ID
+    // but isn't a full URL. E.g. "news-portal/vuxy..."
+    if (imagePath.includes('news-portal/') && !imagePath.startsWith('/')) {
+        // We still need a cloud name. If VITE_CLOUDINARY_CLOUD_NAME is not set, 
+        // we fallback to the known one, but we check if it's already there first.
+        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dbzjoc5rr';
+        return `https://res.cloudinary.com/${cloudName}/image/upload/v1/${imagePath}`;
     }
 
-    const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
-    const serverURL = baseURL.replace('/api', '');
+    // Default fallback for local uploads (if any exist)
+    const envBaseURL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+    const serverURL = envBaseURL.replace('/api', '');
     return `${serverURL}${imagePath}`;
 };
 

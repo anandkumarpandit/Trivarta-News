@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api, { getImageUrl, getVideoEmbed } from '../utils/api';
+import AdModal from '../components/AdModal';
 import PromoCard from '../components/PromoCard';
 import './ArticleDetail.css';
 
@@ -9,6 +10,8 @@ const ArticleDetail = () => {
     const [article, setArticle] = useState(null);
     const [promos, setPromos] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showAdModal, setShowAdModal] = useState(false);
+    const [interstitialAd, setInterstitialAd] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,7 +20,15 @@ const ArticleDetail = () => {
                 setArticle(artRes.data);
 
                 const promoRes = await api.get('/promotions');
+                const activePromos = promoRes.data.filter(p => p.active);
                 setPromos(promoRes.data);
+
+                // Select a random active promo for the interstitial
+                if (activePromos.length > 0) {
+                    const randomAd = activePromos[Math.floor(Math.random() * activePromos.length)];
+                    setInterstitialAd(randomAd);
+                    setShowAdModal(true);
+                }
 
                 setLoading(false);
             } catch (err) {
@@ -60,6 +71,10 @@ const ArticleDetail = () => {
 
     return (
         <div className="container article-layout">
+            {showAdModal && interstitialAd && (
+                <AdModal promo={interstitialAd} onClose={() => setShowAdModal(false)} />
+            )}
+
             <aside className="promo-sidebar left-sidebar">
                 {promos.filter(p => p.position === 'left' && p.active).map(promo => (
                     <PromoCard key={promo._id} promo={promo} />

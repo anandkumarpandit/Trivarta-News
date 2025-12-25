@@ -67,7 +67,13 @@ exports.updatePromo = async (req, res) => {
 
         const updateData = { ...req.body };
         if (req.file) {
-            updateData.imageUrl = req.file.path; // Cloudinary URL
+            const isVideo = req.file.mimetype && req.file.mimetype.startsWith('video');
+            if (isVideo) {
+                updateData.videoUrl = req.file.path;
+                // Optionally clear imageUrl or keep it if it's a fallback
+            } else {
+                updateData.imageUrl = req.file.path;
+            }
         }
 
         const updatedPromo = await Promotion.findByIdAndUpdate(
