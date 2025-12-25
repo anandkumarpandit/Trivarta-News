@@ -31,7 +31,7 @@ const PromoCard = ({ promo, compact = false }) => {
             marginBottom: compact ? '16px' : '20px',
             position: 'relative',
             background: 'rgba(255, 255, 255, 0.98)',
-            borderRadius: compact ? '12px' : '12px',
+            borderRadius: '12px',
             boxShadow: compact ? '0 8px 16px rgba(0,0,0,0.06)' : '0 10px 20px rgba(0,0,0,0.05), 0 2px 6px rgba(0,0,0,0.03)',
             border: '1px solid rgba(0,0,0,0.05)',
             overflow: 'hidden',
@@ -42,17 +42,17 @@ const PromoCard = ({ promo, compact = false }) => {
             margin: compact ? '0 auto 16px auto' : '0 0 20px 0'
         }}>
             {/* Header / Brand Badge */}
-            <div style={{
-                padding: compact ? '8px 12px' : '8px 12px',
+            <div className="promo-header" style={{
+                padding: '8px 12px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
                 background: '#fff',
                 borderBottom: '1px solid rgba(0,0,0,0.05)'
             }}>
-                <div style={{
-                    width: compact ? '20px' : '24px',
-                    height: compact ? '20px' : '24px',
+                <div className="promo-badge-icon" style={{
+                    width: '20px',
+                    height: '20px',
                     borderRadius: '50%',
                     background: 'linear-gradient(135deg, #6e8efb, #a777e3)',
                     display: 'flex',
@@ -61,11 +61,11 @@ const PromoCard = ({ promo, compact = false }) => {
                     color: '#fff',
                     flexShrink: 0
                 }}>
-                    <SiAdblock size={compact ? 12 : 14} />
+                    <SiAdblock className="si-icon" size={12} />
                 </div>
                 <div style={{ textAlign: 'left', minWidth: 0 }}>
-                    <div style={{ fontSize: compact ? '0.75rem' : '0.8rem', fontWeight: '800', color: '#1a1a1a', lineHeight: '1.2', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>QuickAds</div>
-                    <div style={{ fontSize: compact ? '0.65rem' : '0.7rem', fontWeight: '600', color: '#4f46e5', marginTop: '1px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{promo.title}</div>
+                    <div className="promo-brand-name" style={{ fontSize: '0.75rem', fontWeight: '800', color: '#1a1a1a', lineHeight: '1.2', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>QuickAds</div>
+                    <div className="promo-brand-title" style={{ fontSize: '0.65rem', fontWeight: '600', color: '#4f46e5', marginTop: '1px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{promo.title}</div>
                 </div>
 
                 <button
@@ -84,13 +84,13 @@ const PromoCard = ({ promo, compact = false }) => {
                     onMouseOver={(e) => e.currentTarget.style.color = '#ff4d4d'}
                     onMouseOut={(e) => e.currentTarget.style.color = '#bbb'}
                 >
-                    <IoCloseCircle size={compact ? 18 : 20} />
+                    <IoCloseCircle className="close-icon" size={18} />
                 </button>
             </div>
 
             <div style={{ position: 'relative' }}>
                 {videoEmbedUrl ? (
-                    <div style={{
+                    <div className="promo-media-container" style={{
                         position: 'relative',
                         paddingBottom: compact ? '56.25%' : (videoEmbedUrl.includes('instagram.com/reel/') ? '177.77%' : '150%'),
                         height: 0,
@@ -124,22 +124,22 @@ const PromoCard = ({ promo, compact = false }) => {
                                     display: 'block',
                                     transition: 'transform 0.6s ease'
                                 }}
-                                className="promo-img-hover"
+                                className="promo-img-hover promo-image"
                             />
                         </div>
                     </a>
                 ) : null}
 
-                <div style={{
-                    padding: compact ? '10px 14px' : '10px 14px',
+                <div className="promo-body" style={{
+                    padding: '10px 14px',
                     background: '#fff',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '8px'
                 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="promo-meta-info" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ textAlign: 'left' }}>
-                            <div style={{ fontSize: compact ? '0.65rem' : '0.7rem', color: '#888' }}>Personalized for you</div>
+                            <div style={{ fontSize: '0.65rem', color: '#888' }}>Personalized for you</div>
                         </div>
                         <IoInformationCircleOutline size={16} color="#ddd" />
                     </div>
@@ -163,7 +163,7 @@ const PromoCard = ({ promo, compact = false }) => {
                                     transition: 'all 0.3s',
                                     boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)'
                                 }}
-                                className="btn-glow"
+                                className="btn-glow promo-btn"
                             >
                                 Explore Story
                             </a>
@@ -233,6 +233,47 @@ const PromoCard = ({ promo, compact = false }) => {
                     transform: scale(1.02);
                     box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
                     filter: brightness(1.1);
+                }
+
+                /* Mobile Optimization for Very Small Ads */
+                @media (max-width: 600px) {
+                    .promo-compact {
+                        max-width: 200px !important;
+                    }
+                    .promo-compact .promo-image {
+                        height: 90px !important;
+                    }
+                    .promo-compact .promo-header {
+                        padding: 4px 8px !important;
+                    }
+                    .promo-compact .promo-brand-name {
+                        font-size: 0.65rem !important;
+                    }
+                    .promo-compact .promo-brand-title {
+                        font-size: 0.55rem !important;
+                    }
+                    .promo-compact .promo-badge-icon {
+                        width: 16px !important;
+                        height: 16px !important;
+                    }
+                    .promo-compact .si-icon {
+                        transform: scale(0.8);
+                    }
+                    .promo-compact .close-icon {
+                        width: 14px !important;
+                        height: 14px !important;
+                    }
+                    .promo-compact .promo-body {
+                        padding: 6px 10px !important;
+                        gap: 4px !important;
+                    }
+                    .promo-compact .promo-meta-info {
+                        display: none !important;
+                    }
+                    .promo-compact .promo-btn {
+                        padding: 4px !important;
+                        font-size: 0.65rem !important;
+                    }
                 }
             `}</style>
         </div>
