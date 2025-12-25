@@ -3,33 +3,32 @@ import api from '../utils/api';
 import HeroSection from '../components/HeroSection';
 import NewsCard from '../components/NewsCard';
 import SectionHeader from '../components/SectionHeader';
-import PromoCard from '../components/PromoCard';
 import './Home.css';
 
 const Home = () => {
     const [trendingNews, setTrendingNews] = useState([]);
     const [latestNews, setLatestNews] = useState([]);
-    const [promos, setPromos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(24); // Show 24 articles initially
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await api.get('articles/breaking'); // Clean fetch but don't set unused state
-
+                // ... (fetches)
                 const trendingRes = await api.get('articles/trending');
                 setTrendingNews(trendingRes.data);
 
                 const latestRes = await api.get('articles');
                 setLatestNews(latestRes.data);
-
-                const promoRes = await api.get('promotions');
-                setPromos(promoRes.data);
+                if (latestRes.data.length === 0) {
+                    setError('No articles found in database.');
+                }
 
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching news:", err);
+                setError(err.message || 'Failed to load news');
                 setLoading(false);
             }
         };
@@ -42,6 +41,7 @@ const Home = () => {
     };
 
     if (loading) return <div className="container" style={{ padding: '2rem' }}>Loading...</div>;
+    if (error) return <div className="container" style={{ padding: '2rem', color: 'red' }}>Error: {error}</div>;
 
     const featuredArticle = latestNews.length > 0 ? latestNews[0] : null;
     const allRemainingArticles = latestNews.slice(1);
@@ -93,15 +93,6 @@ const Home = () => {
                             <NewsCard key={article._id} article={article} compact={true} />
                         ))}
                     </div>
-
-                    {promos.length > 0 && (
-                        <div className="home-promos" style={{ marginTop: '3rem' }}>
-                            <SectionHeader title="Sponsored" />
-                            {promos.filter(p => p.active).map(promo => (
-                                <PromoCard key={promo._id} promo={promo} compact={true} />
-                            ))}
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

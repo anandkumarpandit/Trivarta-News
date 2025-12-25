@@ -10,9 +10,12 @@ const AdminDashboard = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const artRes = await api.get('/articles');
-                const catRes = await api.get('/categories');
-                setStats({ articles: artRes.data.length, categories: catRes.data.length });
+                const artRes = await api.get('articles');
+                const catRes = await api.get('categories');
+                setStats({
+                    articles: artRes.data.length,
+                    categories: catRes.data.length
+                });
             } catch (err) {
                 console.error("Error fetching stats:", err);
             }
@@ -35,11 +38,6 @@ const AdminDashboard = () => {
                     <h3>Categories</h3>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{stats.categories}</p>
                     <Link to="/admin/categories" className="btn btn-outline" style={{ marginTop: '1rem' }}>Manage Categories</Link>
-                </div>
-                <div style={{ padding: '1.5rem', background: '#f5f5f5', borderRadius: '8px', textAlign: 'center' }}>
-                    <h3>Promotions</h3>
-                    <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>Manage Side Promos</p>
-                    <Link to="/admin/promotions" className="btn btn-outline" style={{ marginTop: '1rem' }}>Manage Promos</Link>
                 </div>
             </div>
 

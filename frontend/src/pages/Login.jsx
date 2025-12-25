@@ -14,7 +14,7 @@ const Login = () => {
         if (res.success) {
             navigate('/admin');
         } else {
-            alert(res.message);
+            alert(`Login Failed: ${res.message}`);
         }
     };
 

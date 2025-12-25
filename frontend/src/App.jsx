@@ -12,8 +12,7 @@ import ArticleForm from './pages/ArticleForm';
 import ManageCategories from './pages/ManageCategories';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ManagePromos from './pages/ManagePromos';
-import PromoForm from './pages/PromoForm';
+
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
@@ -40,10 +39,7 @@ function App() {
               <Route path="/admin/articles/new" element={<ArticleForm />} />
               <Route path="/admin/articles/edit/:id" element={<ArticleForm />} />
               <Route path="/admin/categories" element={<ManageCategories />} />
-              <Route path="/admin/ads" element={<ManagePromos />} />
-              <Route path="/admin/promotions" element={<ManagePromos />} />
-              <Route path="/admin/promotions/new" element={<PromoForm />} />
-              <Route path="/admin/promotions/edit/:id" element={<PromoForm />} />
+
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/about" element={<About />} />

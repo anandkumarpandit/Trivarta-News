@@ -22,7 +22,7 @@ app.use(cors({
         if (!origin) return callback(null, true);
 
         // Allow any localhost origin
-        if (origin.startsWith('http://localhost:')) {
+        if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
             return callback(null, true);
         }
 
@@ -47,7 +47,10 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/news-portal
 app.use('/api/articles', require('./routes/articles'));
 app.use('/api/categories', require('./routes/categories'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/promotions', require('./routes/promos'));
+console.log('✓ All API routes registered');
+console.log('  - /api/articles');
+console.log('  - /api/categories');
+console.log('  - /api/auth');
 
 if (process.env.NODE_ENV === 'production') {
 

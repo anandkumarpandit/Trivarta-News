@@ -11,7 +11,6 @@ A modern, full-stack news portal built with the MERN stack (MongoDB, Express, Re
 - 📱 Responsive design
 - 🎨 Modern UI with dark mode support
 - 👤 Admin dashboard for content management
-- 🎯 Promotional content management
 - 🖼️ Image upload support
 
 ## Tech Stack
@@ -167,12 +166,6 @@ To create an admin user, use the registration endpoint with the `ADMIN_SECRET_KE
 ### Authentication
 - `POST /api/auth/register` - Register user
 - `POST /api/auth/login` - Login user
-
-### Promotions
-- `GET /api/promotions` - Get all promotions
-- `POST /api/promotions` - Create promotion (Auth required)
-- `PUT /api/promotions/:id` - Update promotion (Auth required)
-- `DELETE /api/promotions/:id` - Delete promotion (Auth required)
 
 ## License
 

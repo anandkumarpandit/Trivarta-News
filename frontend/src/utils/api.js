@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL: window.location.hostname === 'localhost'
-        ? 'http://localhost:5001/api/'
+        ? 'http://127.0.0.1:5001/api/'
         : (import.meta.env.VITE_API_URL ?
             (import.meta.env.VITE_API_URL.endsWith('/') ? import.meta.env.VITE_API_URL : `${import.meta.env.VITE_API_URL}/`)
             : '/api/'),
@@ -40,8 +40,8 @@ export const getImageUrl = (path) => {
         return `${baseUrl}${cleanPath}`;
     }
 
-    // 3. Fallback for Local Dev (Port 5001 to match .env)
-    return `http://localhost:5001${path.startsWith('/') ? path : `/${path}`}`;
+    // 3. Fallback for Local Dev (Port 5001 to match server)
+    return `http://127.0.0.1:5001${path.startsWith('/') ? path : `/${path}`}`;
 };
 
 export const getVideoEmbed = (url) => {
