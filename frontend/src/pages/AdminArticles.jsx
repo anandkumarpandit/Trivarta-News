@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../utils/api';
 
+import './AdminArticles.css';
+
 const AdminArticles = () => {
     const [articles, setArticles] = useState([]);
 
@@ -38,29 +40,31 @@ const AdminArticles = () => {
                 <Link to="/admin/articles/new" className="btn">Add New</Link>
             </div>
 
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                    <tr style={{ background: '#f5f5f5', textAlign: 'left' }}>
-                        <th style={{ padding: '12px' }}>Title</th>
-                        <th style={{ padding: '12px' }}>Category</th>
-                        <th style={{ padding: '12px' }}>Date</th>
-                        <th style={{ padding: '12px' }}>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {articles.map(article => (
-                        <tr key={article._id} style={{ borderBottom: '1px solid #ddd' }}>
-                            <td style={{ padding: '12px' }}>{article.title}</td>
-                            <td style={{ padding: '12px' }}>{article.category?.name}</td>
-                            <td style={{ padding: '12px' }}>{new Date(article.createdAt).toLocaleDateString()}</td>
-                            <td style={{ padding: '12px', display: 'flex', gap: '8px' }}>
-                                <Link to={`/admin/articles/edit/${article._id}`} style={{ color: 'blue', textDecoration: 'none' }}>Edit</Link>
-                                <button onClick={() => handleDelete(article._id)} style={{ color: 'red', background: 'none', border: 'none', cursor: 'pointer' }}>Delete</button>
-                            </td>
+            <div className="admin-table-container">
+                <table className="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {articles.map(article => (
+                            <tr key={article._id}>
+                                <td>{article.title}</td>
+                                <td>{article.category?.name}</td>
+                                <td>{new Date(article.createdAt).toLocaleDateString()}</td>
+                                <td style={{ display: 'flex', gap: '8px' }}>
+                                    <Link to={`/admin/articles/edit/${article._id}`} className="action-btn edit">Edit</Link>
+                                    <button onClick={() => handleDelete(article._id)} className="action-btn delete">Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
