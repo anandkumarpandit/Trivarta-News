@@ -10,6 +10,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminArticles from './pages/AdminArticles';
 import ArticleForm from './pages/ArticleForm';
 import ManageCategories from './pages/ManageCategories';
+import ManagePromotions from './pages/ManagePromotions';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -39,6 +40,7 @@ function App() {
               <Route path="/admin/articles/new" element={<ArticleForm />} />
               <Route path="/admin/articles/edit/:id" element={<ArticleForm />} />
               <Route path="/admin/categories" element={<ManageCategories />} />
+              <Route path="/admin/promotions" element={<ManagePromotions />} />
 
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

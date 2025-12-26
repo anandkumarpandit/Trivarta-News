@@ -44,13 +44,16 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/news-portal
         process.exit(1);
     });
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/articles', require('./routes/articles'));
 app.use('/api/categories', require('./routes/categories'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/promotions', require('./routes/promotions'));
 console.log('✓ All API routes registered');
 console.log('  - /api/articles');
 console.log('  - /api/categories');
 console.log('  - /api/auth');
+console.log('  - /api/promotions');
 
 if (process.env.NODE_ENV === 'production') {
 

@@ -1,0 +1,211 @@
+/* TopBanner.css */
+.top-banner-alert {
+    margin: 20px 0;
+    padding: 16px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, margin 0.8s ease-out, padding 0.8s ease-out, max-height 0.8s ease-out;
+    max-height: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.top-banner-alert.hiding {
+    opacity: 0;
+    transform: translateY(-10px);
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    border: none;
+    pointer-events: none;
+}
+
+.banner-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
+    padding: 4px;
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
+    z-index: 2;
+}
+
+.banner-close-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.banner-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.banner-text {
+    flex: 1;
+    min-width: 200px;
+}
+
+.banner-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.banner-headline {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+}
+
+.banner-description {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.banner-cta {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.banner-cta:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .top-banner-alert {
+        background: #1e1e1e;
+        border-color: #333;
+    }
+
+    .banner-headline {
+        color: #f0f0f0;
+    }
+
+    .banner-description {
+        color: #aaa;
+    }
+
+    .banner-close-btn {
+        color: #777;
+    }
+
+    .banner-close-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .top-banner-alert {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .banner-content {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .banner-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .banner-cta {
+        width: 100%;
+        text-align: center;
+        margin-top: 8px;
+    }
+}
+
+.banner-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.banner-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.banner-dot.active {
+    background: #007bff;
+    width: 12px;
+    border-radius: 3px;
+}
+
+.slide-animation {
+    animation: fadeInSlide 0.5s ease-out;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

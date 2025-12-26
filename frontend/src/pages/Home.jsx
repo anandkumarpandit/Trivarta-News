@@ -3,11 +3,13 @@ import api from '../utils/api';
 import HeroSection from '../components/HeroSection';
 import NewsCard from '../components/NewsCard';
 import SectionHeader from '../components/SectionHeader';
+import PromotionCard from '../components/promotions/PromotionCard';
 import './Home.css';
 
 const Home = () => {
     const [trendingNews, setTrendingNews] = useState([]);
     const [latestNews, setLatestNews] = useState([]);
+    const [promotions, setPromotions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(24); // Show 24 articles initially
     const [error, setError] = useState(null);
@@ -23,6 +25,15 @@ const Home = () => {
                 setLatestNews(latestRes.data);
                 if (latestRes.data.length === 0) {
                     setError('No articles found in database.');
+                }
+
+                // Fetch promotions
+                try {
+                    const promoRes = await api.get('promotions');
+                    const activeInline = promoRes.data.filter(p => p.type === 'inline_promo' && p.active);
+                    setPromotions(activeInline);
+                } catch (err) {
+                    console.error("Failed to load promotions", err);
                 }
 
                 setLoading(false);
@@ -68,9 +79,23 @@ const Home = () => {
                 <div>
                     <SectionHeader title="Latest News" link="/category/all" linkText="View All News" />
                     <div className="articles-grid">
-                        {visibleArticles.map(article => (
-                            <NewsCard key={article._id} article={article} />
-                        ))}
+                        {visibleArticles.map((article, index) => {
+                            // Show ad every 8 items. Rotate through home promotions.
+                            const promoIndex = Math.floor(index / 8);
+                            const currentPromo = promotions[promoIndex % promotions.length];
+                            const showAd = promotions.length > 0 && (index + 1) % 8 === 0;
+
+                            return (
+                                <React.Fragment key={article._id}>
+                                    <NewsCard article={article} />
+                                    {showAd && currentPromo && (
+                                        <div className="home-promo-wrapper" style={{ gridColumn: '1 / -1', margin: '1.5rem 0' }}>
+                                            <PromotionCard ads={promotions.slice(promoIndex % promotions.length, (promoIndex % promotions.length) + 2)} />
+                                        </div>
+                                    )}
+                                </React.Fragment>
+                            );
+                        })}
                     </div>
 
                     {hasMore && (
@@ -93,6 +118,23 @@ const Home = () => {
                             <NewsCard key={article._id} article={article} compact={true} />
                         ))}
                     </div>
+
+                    {promotions.length > 0 && (
+                        <div className="mini-promos-section" style={{ marginTop: '2rem' }}>
+                            <SectionHeader title="Sponsorship" />
+                            <div className="mini-promos-stack" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                {promotions.map((promo, idx) => (
+                                    <PromotionCard key={promo._id || idx} promotion={promo} className="mini" />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {promotions.length > 0 && (
+                        <div style={{ marginTop: '2rem' }}>
+                            <PromotionCard ads={promotions} className="vertical" />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

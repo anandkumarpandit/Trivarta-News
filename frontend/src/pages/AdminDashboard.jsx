@@ -1,4 +1,4 @@
- import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../utils/api';
 import { AuthContext } from '../context/AuthContext';
@@ -40,6 +40,11 @@ const AdminDashboard = () => {
                     <h3>Categories</h3>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{stats.categories}</p>
                     <Link to="/admin/categories" className="btn btn-outline">Manage Categories</Link>
+                </div>
+                <div className="dashboard-card">
+                    <h3>Promotions</h3>
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>Ads</p>
+                    <Link to="/admin/promotions" className="btn btn-outline">Manage Ads</Link>
                 </div>
             </div>
 
