@@ -32,6 +32,11 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
+            {/* Overlay for mobile menu */}
+            <div
+                className={`navbar-overlay ${menuOpen ? 'active' : ''}`}
+                onClick={() => setMenuOpen(false)}
+            ></div>
             <div className="container navbar-container">
                 <button className="mobile-menu-btn" onClick={toggleMenu}>
                     {menuOpen ? <FaTimes /> : <FaBars />}
