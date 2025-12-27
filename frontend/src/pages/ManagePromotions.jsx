@@ -229,19 +229,19 @@ const ManagePromotions = () => {
                     <tbody>
                         {promotions.map(promo => (
                             <tr key={promo._id}>
-                                <td className="promo-img-cell">
+                                <td className="promo-img-cell" data-label="Preview">
                                     <img src={promo.image} alt="Ad Thumbnail" />
                                 </td>
-                                <td>
+                                <td data-label="Type">
                                     <span className={`badge badge-${promo.type === 'top_banner' ? 'top' : 'inline'}`}>
                                         {promo.type.replace('_', ' ')}
                                     </span>
                                 </td>
-                                <td className="promo-title-cell">
+                                <td className="promo-title-cell" data-label="Details">
                                     <h3>{promo.title}</h3>
                                     <p>{promo.description}</p>
                                 </td>
-                                <td>
+                                <td data-label="Actions">
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div className="status-toggle">
                                             <input

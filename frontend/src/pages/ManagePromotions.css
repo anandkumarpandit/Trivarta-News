@@ -275,3 +275,139 @@
         color: #aaa;
     }
 }
+
+@media (max-width: 768px) {
+    .promo-dashboard {
+        padding: 1rem;
+    }
+
+    .promo-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .promo-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .add-btn {
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Table to Card Transformation */
+    .promo-table,
+    .promo-table thead,
+    .promo-table tbody,
+    .promo-table th,
+    .promo-table td,
+    .promo-table tr {
+        display: block;
+    }
+
+    .promo-table thead {
+        display: none;
+        /* Hide headers on mobile */
+    }
+
+    .promo-table tr {
+        margin-bottom: 1.5rem;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        background: #fff;
+        padding: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .promo-table td {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f5f5f5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+    }
+
+    .promo-table td:last-child {
+        border-bottom: none;
+    }
+
+    /* Add labels for better context */
+    .promo-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #666;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        text-align: left;
+    }
+
+    .promo-img-cell {
+        justify-content: center !important;
+        background: #fafafa;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .promo-img-cell::before {
+        display: none;
+    }
+
+    .promo-img-cell img {
+        width: 100%;
+        max-width: 200px;
+        height: 120px;
+    }
+
+    .promo-title-cell {
+        flex-direction: column;
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+
+    .promo-title-cell::before {
+        margin-bottom: 4px;
+    }
+
+    /* Modern Form Stack */
+    .form-modal {
+        padding: 1.5rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modern-form {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+
+    /* Dark Mode overwrites for mobile cards */
+    @media (prefers-color-scheme: dark) {
+        .promo-table tr {
+            background: #1a1a1a;
+            border-color: #333;
+        }
+
+        .promo-table td {
+            border-bottom-color: #222;
+        }
+
+        .promo-table td::before {
+            color: #aaa;
+        }
+
+        .promo-img-cell {
+            background: #252525;
+        }
+    }
+}
