@@ -10,6 +10,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+console.log('--- DEPLOYMENT DIAGNOSTICS ---');
+console.log(`Environment: ${process.env.NODE_ENV}`);
+console.log(`Port: ${PORT}`);
+console.log('------------------------------');
+
 // ✅ CHANGED: allow local + production frontends
 app.use(cors({
     origin: (origin, callback) => {
@@ -49,6 +54,15 @@ app.use('/api/articles', require('./routes/articles'));
 app.use('/api/categories', require('./routes/categories'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/promotions', require('./routes/promotions'));
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        timestamp: new Date(),
+        env: process.env.NODE_ENV,
+        frontendPath: path.join(__dirname, '../frontend/dist'),
+        frontendExists: fs.existsSync(path.join(__dirname, '../frontend/dist'))
+    });
+});
 console.log('✓ All API routes registered');
 console.log('  - /api/articles');
 console.log('  - /api/categories');
@@ -66,7 +80,9 @@ if (process.env.NODE_ENV === 'production') {
             res.sendFile(path.join(frontendPath, 'index.html'));
         });
     } else {
-        console.log('Frontend build not found, API only');
+        console.log('❌ CRITICAL: Frontend build NOT found at:', frontendPath);
+        console.log('Contents of ../frontend:', fs.existsSync(path.join(__dirname, '../frontend')) ? fs.readdirSync(path.join(__dirname, '../frontend')) : 'Directory missing');
+        app.get('/', (req, res) => res.send('Frontend build missing - Check build logs'));
     }
 
 } else {
