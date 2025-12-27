@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api';
+import api, { getImageUrl } from '../utils/api';
 import './ManagePromotions.css';
 
 const ManagePromotions = () => {
@@ -230,7 +230,7 @@ const ManagePromotions = () => {
                         {promotions.map(promo => (
                             <tr key={promo._id}>
                                 <td className="promo-img-cell" data-label="Preview">
-                                    <img src={promo.image} alt="Ad Thumbnail" />
+                                    <img src={getImageUrl(promo.image)} alt="Ad Thumbnail" />
                                 </td>
                                 <td data-label="Type">
                                     <span className={`badge badge-${promo.type === 'top_banner' ? 'top' : 'inline'}`}>

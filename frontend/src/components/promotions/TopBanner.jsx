@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getImageUrl } from '../../utils/api';
 import './TopBanner.css';
 
 const TopBanner = ({
@@ -42,7 +43,7 @@ const TopBanner = ({
             </button>
 
             <div className="banner-content carousel-item">
-                <img src={currentAd.image} alt="Promotion" className="banner-image slide-animation" key={currentIndex} />
+                <img src={getImageUrl(currentAd.image)} alt="Promotion" className="banner-image slide-animation" key={currentIndex} />
 
                 <div className="banner-text slide-animation" key={`text-${currentIndex}`}>
                     <span className="banner-label">Sponsored</span>

@@ -5,19 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Configure Multer for local storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadDir = 'uploads/';
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // unique filename
-    }
-});
+const { storage } = require('../config/cloudinary');
 
 const upload = multer({ storage: storage });
 
@@ -53,8 +41,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         };
 
         if (req.file) {
-            const baseUrl = `${req.protocol}://${req.get('host')}`;
-            promoFields.image = `${baseUrl}/uploads/${req.file.filename}`;
+            promoFields.image = req.file.path; // Use Cloudinary URL directly
         } else if (req.body.image) {
             promoFields.image = req.body.image;
         } else {
@@ -88,8 +75,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     if (typeof active !== 'undefined') promoFields.active = active === 'true' || active === true;
 
     if (req.file) {
-        const baseUrl = `${req.protocol}://${req.get('host')}`;
-        promoFields.image = `${baseUrl}/uploads/${req.file.filename}`;
+        promoFields.image = req.file.path; // Use Cloudinary URL directly
     } else if (req.body.image) {
         promoFields.image = req.body.image;
     }

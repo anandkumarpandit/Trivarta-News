@@ -1,7 +1,7 @@
 import React from 'react';
 import './InlinePromo.css';
 
-import { getVideoEmbed } from '../../utils/api';
+import { getVideoEmbed, getImageUrl } from '../../utils/api';
 
 const PromotionCard = ({ ads = [], promotion, className = '' }) => {
     const adList = Array.isArray(ads) && ads.length > 0 ? ads : (promotion ? [promotion] : []);
@@ -40,14 +40,14 @@ const PromotionCard = ({ ads = [], promotion, className = '' }) => {
                 </div>
             );
         }
-        return <img src={currentAd.image} className="promo-image" alt="Sponsored" />;
+        return <img src={getImageUrl(currentAd.image)} className="promo-image" alt="Sponsored" />;
     };
 
     if (isMini) {
         return (
             <div className={`inline-promo-card mini ${className}`} style={{ margin: '0' }}>
                 <a href={currentAd.ctaLink} className="promo-container slide-animation" key={currentIndex} target="_blank" rel="noopener noreferrer">
-                    <img src={currentAd.image} className="promo-image" alt="Sponsored" />
+                    <img src={getImageUrl(currentAd.image)} className="promo-image" alt="Sponsored" />
                     <div className="promo-content">
                         <h4 className="promo-title">{currentAd.title}</h4>
                         <span className="promo-cta">{currentAd.ctaText}</span>

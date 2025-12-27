@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getVideoEmbed } from '../../utils/api';
+import { getVideoEmbed, getImageUrl } from '../../utils/api';
 import './PreReadAd.css';
 
 const PreReadAd = ({ ads = [], onComplete }) => {
@@ -66,7 +66,7 @@ const PreReadAd = ({ ads = [], onComplete }) => {
                             ></iframe>
                         </div>
                     ) : (
-                        <img src={currentAd.image} alt="Sponsored" className="pre-read-image" />
+                        <img src={getImageUrl(currentAd.image)} alt="Sponsored" className="pre-read-image" />
                     )}
                 </div>
 
