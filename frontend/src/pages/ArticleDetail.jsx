@@ -88,7 +88,7 @@ const ArticleDetail = () => {
                         <div class="inline-promo-card">
                             <span class="promo-label">Sponsored</span>
                             <a href="${promo.ctaLink}" class="promo-container" target="_blank" rel="noopener noreferrer">
-                                <img src="${promo.image}" class="promo-image" alt="Sponsored" />
+                                <img src="${getImageUrl(promo.image)}" class="promo-image" alt="Sponsored" />
                                 <div class="promo-content">
                                     <h4 class="promo-title">${promo.title}</h4>
                                     <p class="promo-desc">${promo.description}</p>

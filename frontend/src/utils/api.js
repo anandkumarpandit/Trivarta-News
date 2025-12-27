@@ -25,32 +25,32 @@ api.interceptors.request.use(
 export const getImageUrl = (path) => {
     if (!path) return '';
 
-    // If the path is already a full Cloudinary URL or another external HTTPS URL, return it
-    if (path.startsWith('https://')) return path;
-
-    // Handle legacy absolute local URLs (Mixed Content)
-    // Strip http://localhost:5001 or http://127.0.0.1:xxx from paths
-    let cleanPath = path.replace(/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, '');
-
-    // If it's still an absolute URL (like an old HTTP site), return as is
-    if (cleanPath.startsWith('http://')) return cleanPath;
-
-    // 1. Production (relative to backend origin if VITE_API_URL is set)
-    if (import.meta.env.PROD && import.meta.env.VITE_API_URL) {
-        const baseUrl = import.meta.env.VITE_API_URL.split('/api')[0];
-        const finalPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
-        return `${baseUrl}${finalPath}`;
+    // If the path is already a full External URL (Cloudinary, etc.), return it
+    // Requirement 5: Ensure all images load over HTTPS in production
+    if (path.startsWith('http')) {
+        // Repair legacy local absolute URLs that might exist in the database
+        // Requirement 1: Remove all hardcoded 127.0.0.1 or localhost image URLs
+        if (path.includes('127.0.0.1') || path.includes('localhost')) {
+            const relativePath = path.replace(/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, '');
+            return getImageUrl(relativePath); // Recursively resolve with the correct base URL
+        }
+        return path;
     }
 
-    // 2. Explicit Environment Variable for images
-    if (import.meta.env.VITE_IMAGE_BASE_URL) {
-        const baseUrl = import.meta.env.VITE_IMAGE_BASE_URL.replace(/\/$/, '');
-        const finalPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
-        return `${baseUrl}${finalPath}`;
-    }
+    // Requirement 2: Implement an environment-based base URL system
+    // Development → http://localhost:5001
+    // Production → https://trivarta.onrender.com
+    const isProd = import.meta.env.PROD;
+    const prodBase = 'https://trivarta.onrender.com';
+    const devBase = 'http://localhost:5001';
 
-    // 3. Fallback for Local Dev (Port 5001 to match server)
-    return `http://127.0.0.1:5001${cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`}`;
+    // Choose base based on environment
+    const baseUrl = isProd ? prodBase : devBase;
+
+    // Ensure path starts with a single slash
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+
+    return `${baseUrl}${cleanPath}`;
 };
 
 export const getVideoEmbed = (url) => {

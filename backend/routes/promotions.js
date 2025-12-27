@@ -41,9 +41,15 @@ router.post('/', upload.single('image'), async (req, res) => {
         };
 
         if (req.file) {
-            promoFields.image = req.file.path; // Use Cloudinary URL directly
+            // Requirement 3: Ensure backend returns relative paths only for local uploads
+            // If the file is uploaded locally (not Cloudinary), save as /uploads/filename
+            // If using Cloudinary, it will be a full URL starting with http
+            promoFields.image = req.file.path.startsWith('http')
+                ? req.file.path
+                : `/uploads/${req.file.filename}`;
         } else if (req.body.image) {
-            promoFields.image = req.body.image;
+            // Repair any legacy hardcoded 127.0.0.1 URLs if they are sent in the body
+            promoFields.image = req.body.image.replace(/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, '');
         } else {
             return res.status(400).json({ msg: 'Image is required' });
         }
@@ -75,9 +81,13 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     if (typeof active !== 'undefined') promoFields.active = active === 'true' || active === true;
 
     if (req.file) {
-        promoFields.image = req.file.path; // Use Cloudinary URL directly
+        // Requirement 3: Relative paths for local, absolute for Cloudinary
+        promoFields.image = req.file.path.startsWith('http')
+            ? req.file.path
+            : `/uploads/${req.file.filename}`;
     } else if (req.body.image) {
-        promoFields.image = req.body.image;
+        // Repair legacy URLs during update
+        promoFields.image = req.body.image.replace(/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, '');
     }
 
     try {
