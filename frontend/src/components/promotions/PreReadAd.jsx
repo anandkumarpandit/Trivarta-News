@@ -26,7 +26,7 @@ const PreReadAd = ({ ads = [], onComplete }) => {
         }, 1000);
 
         return () => clearInterval(countdownInterval);
-    }, [currentAd]);
+    }, [currentAd, onComplete]);
 
     const handleManualClose = () => {
         if (timeLeft > 0) return;

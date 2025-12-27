@@ -20,19 +20,18 @@ const ManagePromotions = () => {
     const [newFile, setNewFile] = useState(null);
 
     useEffect(() => {
+        const fetchPromotions = async () => {
+            try {
+                const res = await api.get('promotions');
+                setPromotions(res.data);
+                setLoading(false);
+            } catch (err) {
+                console.error(err);
+                setLoading(false);
+            }
+        };
         fetchPromotions();
     }, []);
-
-    const fetchPromotions = async () => {
-        try {
-            const res = await api.get('promotions');
-            setPromotions(res.data);
-            setLoading(false);
-        } catch (err) {
-            console.error(err);
-            setLoading(false);
-        }
-    };
 
     const resetForm = () => {
         setPromoData({

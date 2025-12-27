@@ -51,7 +51,7 @@ const ArticleDetail = () => {
     const processContent = (html) => {
         if (!html) return '';
         // Improved Regex for Video Links (either in A tags or raw text)
-        const videoLinkRegex = /<a href="(https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/|playlist\?list=)|youtu\.be\/|instagram\.com\/(?:reel|p)\/|tiktok\.com\/@[^\/]+\/video\/|facebook\.com\/watch\/\?v=|fb\.watch\/)[^"]+)"[^>]*>.*?<\/a>/g;
+        const videoLinkRegex = /<a href="(https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/|playlist\?list=)|youtu\.be\/|instagram\.com\/(?:reel|p)\/|tiktok\.com\/@[^/]+\/video\/|facebook\.com\/watch\/\?v=|fb\.watch\/)[^"]+)"[^>]*>.*?<\/a>/g;
 
         let processedHtml = html.replace(videoLinkRegex, (match, url) => {
             const embedUrl = getVideoEmbed(url);
@@ -62,7 +62,7 @@ const ArticleDetail = () => {
             return match;
         });
 
-        const rawUrlRegex = /(^|>|\s)(https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/|playlist\?list=)|youtu\.be\/|instagram\.com\/(?:reel|p)\/|tiktok\.com\/@[^\/]+\/video\/|facebook\.com\/watch\/\?v=|fb\.watch\/)[^\s<"']+)($|<|\s)/g;
+        const rawUrlRegex = /(^|>|\s)(https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/|playlist\?list=)|youtu\.be\/|instagram\.com\/(?:reel|p)\/|tiktok\.com\/@[^/]+\/video\/|facebook\.com\/watch\/\?v=|fb\.watch\/)[^\s<"']+)($|<|\s)/g;
         processedHtml = processedHtml.replace(rawUrlRegex, (match, p1, url, p3) => {
             const embedUrl = getVideoEmbed(url);
             if (embedUrl) {
