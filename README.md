@@ -2,18 +2,6 @@
 
 A modern, full-stack news portal built with the MERN stack (MongoDB, Express, React, Node.js).
 
-## Features
-
-- 📰 Article management with rich text editor
-- 🔥 Breaking news, trending, and latest news sections
-- 📂 Category-based article organization
-- 🔍 Search functionality
-- 📱 Responsive design
-- 🎨 Modern UI with dark mode support
-- 👤 Admin dashboard for content management
-- 🖼️ Image upload support
-
-
 ### 1. Clone the repository
 ```bash
 git clone <your-repo-url>
